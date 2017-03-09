@@ -1,17 +1,16 @@
 package ch.usi.inf.reveal.parsing.stormed.service
 
 import java.security.cert.X509Certificate
-import org.json4s.native.Serialization.read
-import org.json4s.native.Serialization.write
+import org.json4s.native.Serialization.{read, write}
 import ch.usi.inf.reveal.parsing.artifact.ArtifactSerializer
 import javax.net.ssl._
 import scalaj.http.Http
 import java.security.SecureRandom
-import scalaj.http.HttpOptions
+import org.json4s.JsonAST.JObject
 
 
 object StormedService {
-  implicit val formats = ArtifactSerializer.formats + ResponseSerializer  
+  implicit val formats = ArtifactSerializer.formats  
 
   val trustManager = new X509TrustManager() {
     override def getAcceptedIssuers() = null
@@ -28,18 +27,51 @@ object StormedService {
     def verify(hostname: String, sslSession: javax.net.ssl.SSLSession ) = true
   })
   
-  
-  val url = "https://stormed.inf.usi.ch/parse"
-  
-  def parse(text: String, key: String) = {
-    val request = ParseRequest(text, key)
-    val jsonRequest = write(request)
-    val bodyResponse = Http(url).postData(jsonRequest)
+  private[this] def doRestRequest[T <: Request](service: String, params: T) = {
+    val url = s"https://stormed.inf.usi.ch/service/$service"
+    val jsonRequest = write(params)
+    Http(url).postData(jsonRequest)
       .header("Content-Type", "application/json")
       .header("Charset", "UTF-8")
-      .option(HttpOptions.connTimeout(50000)).option(HttpOptions.readTimeout(50000))
       .asString.body
+  }
+  
+  private[this] def hasError(response: String) = {
+    import org.json4s.native.JsonMethods._
     
-    read[Response](bodyResponse)
+    parseOpt(response) match {
+      case Some(json) =>
+        val status = (json \ "status").extract[String]
+        if(status == "ERROR")
+          Some(read[ErrorResponse](response))
+        else 
+          None
+      case None => 
+        Some(ErrorResponse(s"Invalid Response: $response", "ERROR"))
+    }
+  }
+  
+  
+  def deserializeResponse[T](responseBody: String) = {
+    
+  }
+  
+  def parse(text: String, key: String): Response = {
+    val request = ParsingRequest(text, key)
+    val response = doRestRequest("parse", request)
+    hasError(response) match {
+      case Some(error) => error
+      case None => read[ParsingResponse](response) 
+    }
+  }
+  
+  
+  def tag(text: String, isTagged: Boolean, key: String): Response = {
+    val request = TaggingRequest(text, isTagged, key)
+    val response = doRestRequest("tagger", request)
+    hasError(response) match {
+      case Some(error) => error
+      case None => read[TaggingResponse](response) 
+    }
   }
 }

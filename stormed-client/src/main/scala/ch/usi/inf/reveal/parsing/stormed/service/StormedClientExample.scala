@@ -10,15 +10,16 @@ object StormedClientExample extends App {
     Fusce in magna eu ante tincidunt euismod nec eu ligula.
     List<Integer> someList;
     """.trim
+    
 
   val key = "<your API key>"  
   
   val result = StormedService.parse(codeToParse,key)
   result match {
-    case SuccessResponse(result, quota, status) =>
+    case ParsingResponse(result, quota, status) =>
       println(s"Status: $status")
       println(s"Quota Remaining: $quota")
-      val nodeTypes = result.map{_.getClass.getSimpleName}
+      val nodeTypes = result//.map{_.getClass.getSimpleName}
       println("Parsing Result: ")
       nodeTypes.foreach{println}
     case ErrorResponse(message, status) =>

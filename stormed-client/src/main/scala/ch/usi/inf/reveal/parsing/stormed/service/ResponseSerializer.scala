@@ -13,7 +13,7 @@ object ResponseSerializer extends CustomSerializer[Response](format => (
     case obj: JObject =>
       val name = (obj \ "status").extract[String]
       name match {
-        case "OK" => obj.extract[SuccessResponse]
+        case "OK" => obj.extract[ParsingResponse]
         case "ERROR" => obj.extract[ErrorResponse]
       }
   },

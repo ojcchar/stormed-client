@@ -35,14 +35,5 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/ojcch/.m2/repository/ch/usi/inf/reveal/parsing/stormed-devkit/1.9.0/stormed-devkit-1.9.0.jar">
-		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
-			<attribute name="maven.groupId" value="ch.usi.inf.reveal.parsing"/>
-			<attribute name="maven.artifactId" value="stormed-devkit"/>
-			<attribute name="maven.version" value="1.9.0"/>
-			<attribute name="maven.scope" value="compile"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

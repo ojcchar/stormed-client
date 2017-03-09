@@ -26,6 +26,7 @@ public class StormedClientTest {
 		String codeToParse = "I have been working on IndexWriter and the performOperation method."
 				+ " I also have this call performOperation(\"arg\"). " 
 				+ " I don't know what happens. I have this code: class IndexWriter{}";
+//		String codeToParse = "I have been working on";
 		System.out.println(codeToParse);
 		String isolateText = StormedClient.isolateText(codeToParse);
 

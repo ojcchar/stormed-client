@@ -3,10 +3,10 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>seers</groupId>
 	<artifactId>stormed-client</artifactId>
-	<version>1.2</version>
+	<version>1.3</version>
 	<inceptionYear>2015</inceptionYear>
 	<properties>
-		<scala.version>2.11.7</scala.version>
+		<scala.version>2.11.8</scala.version>
 		<scala.version.short>_2.11</scala.version.short>
 	</properties>
 
@@ -39,14 +39,14 @@
 		<dependency>
 			<groupId>ch.usi.inf.reveal.parsing</groupId>
 			<artifactId>stormed-devkit</artifactId>
-			<version>1.9.0</version>
+			<version>1.9.4</version>
 		</dependency>
 
 
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.12</version>
+			<version>4.4</version>
 		</dependency>
 
 
@@ -54,6 +54,7 @@
 
 	<build>
 		<pluginManagement>
+		    
 			<plugins>
 				<plugin>
 					<groupId>net.alchim31.maven</groupId>
@@ -69,50 +70,26 @@
 		</pluginManagement>
 		<plugins>
 			<plugin>
-				<groupId>org.eclipse.m2e</groupId>
-				<artifactId>lifecycle-mapping</artifactId>
-				<version>1.0.0</version>
-				<configuration>
-					<lifecycleMappingMetadata>
-						<pluginExecutions>
-							<pluginExecution>
-								<pluginExecutionFilter>
-									<groupId>net.alchim31.maven</groupId>
-									<artifactId>scala-maven-plugin</artifactId>
-									<version>3.2.1</version>
-									<goals>
-										<goal>compile</goal>
-									</goals>
-								</pluginExecutionFilter>
-								<action>
-									<ignore />
-								</action>
-							</pluginExecution>
-						</pluginExecutions>
-					</lifecycleMappingMetadata>
-				</configuration>
+				<groupId>net.alchim31.maven</groupId>
+				<artifactId>scala-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>scala-compile-first</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>add-source</goal>
+							<goal>compile</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>scala-test-compile</id>
+						<phase>process-test-resources</phase>
+						<goals>
+							<goal>testCompile</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
-			<!-- <plugin> -->
-			<!-- <groupId>net.alchim31.maven</groupId> -->
-			<!-- <artifactId>scala-maven-plugin</artifactId> -->
-			<!-- <executions> -->
-			<!-- <execution> -->
-			<!-- <id>scala-compile-first</id> -->
-			<!-- <phase>process-resources</phase> -->
-			<!-- <goals> -->
-			<!-- <goal>add-source</goal> -->
-			<!-- <goal>compile</goal> -->
-			<!-- </goals> -->
-			<!-- </execution> -->
-			<!-- <execution> -->
-			<!-- <id>scala-test-compile</id> -->
-			<!-- <phase>process-test-resources</phase> -->
-			<!-- <goals> -->
-			<!-- <goal>testCompile</goal> -->
-			<!-- </goals> -->
-			<!-- </execution> -->
-			<!-- </executions> -->
-			<!-- </plugin> -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
