@@ -1,0 +1,29 @@
+# stormed-client v2.0.0
+
+---
+##Obtaining an API key
+First of all, register on the [StORMeD] website to obtain an API.
+Locate in the code all the strings `"your API key"` and put your newly obtained key instead. 
+
+After this first step you are ready to run the examples either in Java or Scala via SBT or Maven.
+
+
+----
+## Running with SBT
+Running the sample code with sbt is simple. Just type `sbt run` and the project will automatically compile and identify all the main classes that can be run. Select the example desired by typing the corresponding number.
+
+### Importing in Eclipse
+Sbt allows the creation of eclipse project by running `sbt eclipse`. Once run the previous command, the project can be imported in eclipse as *Existing Eclipse Project*.
+
+----
+## Running with Maven
+The actual pom does not allow to directly run the examples from terminal. However, IDEs like Eclipse and IDEA can easily import and run the project.
+
+### IDEA
+For IDEA you need to install a plugin for scala before proceeding.
+
+### Scala IDE
+Given the presence of Scala code, you need to use a [Scala IDE] version of Eclipse. A normal Eclipse distribution will not work with this project.
+
+[StORMeD]: http://stormed.inf.usi.ch
+[Scala IDE]: http://scala-ide.org
