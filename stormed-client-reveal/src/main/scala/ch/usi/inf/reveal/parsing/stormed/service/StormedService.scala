@@ -1,11 +1,14 @@
 package ch.usi.inf.reveal.parsing.stormed.service
 
 import java.security.cert.X509Certificate
+
 import org.json4s.native.Serialization.{read, write}
 import ch.usi.inf.reveal.parsing.artifact.ArtifactSerializer
 import javax.net.ssl._
-import scalaj.http.Http
+
+import scalaj.http.{Http, HttpOptions}
 import java.security.SecureRandom
+
 import org.json4s.JsonAST.JObject
 
 
@@ -33,6 +36,7 @@ object StormedService {
     Http(url).postData(jsonRequest)
       .header("Content-Type", "application/json")
       .header("Charset", "UTF-8")
+      .option(HttpOptions.connTimeout(10000)).option(HttpOptions.readTimeout(50000))
       .asString.body
   }
   
@@ -52,7 +56,7 @@ object StormedService {
   }
   
   
-  private def apiKey = "your API Key"
+  private def apiKey = "4F8D61679CC7928DC11130CEC5F46ECA6C51E3CCAA0C3EAD1EB20699E09ACFBE"
   
 
   
